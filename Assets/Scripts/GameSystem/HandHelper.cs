@@ -32,6 +32,9 @@ namespace DAE.GameSystem
         [SerializeField]
         public GameObject PushPrefab;
 
+        [SerializeField]
+        public GameObject BombPrefab;
+
         private List<GameObject> _cards = new List<GameObject>();
 
 
@@ -48,6 +51,9 @@ namespace DAE.GameSystem
 
             for (int i = 0; i < cardsPerType; i++)
                 _cards.Add(LaserPrefab);
+
+            for (int i = 0; i < cardsPerType; i++)
+                _cards.Add(BombPrefab);
 
             _cards.Shuffle();
         }
