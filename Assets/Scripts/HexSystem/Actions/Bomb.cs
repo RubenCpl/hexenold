@@ -114,16 +114,17 @@ namespace DAE.HexSystem.Moves
         public override void Execute(Board<Position, TPiece> board, Grid<Position> grid, TPiece piece, Position position, TCard card)
         {
             board.TryGetPositionOf(piece, out var pos);
+            //var views = FindObjectsOfType<PositionView>();
 
             var positionList = IsolatedPositions(board, grid, piece, position, card);
 
             foreach (var p in positionList)
             {
+                //p.;
                 board.TryGetPieceAt(p, out var toPiece);
                 if (toPiece != null)
                 {
-                    if (toPiece.PieceType == PieceType.Enemy)
-                        board.Take(toPiece);
+                   board.Take(toPiece);
                 }
             }
         }

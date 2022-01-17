@@ -1,5 +1,7 @@
 ﻿using DAE.BoardSystem;
 using DAE.HexSystem;
+using DAE.StateSystem;
+using DAE.GameSystem.GameStates;
 using UnityEngine;
 
 namespace DAE.GameSystem
@@ -20,6 +22,8 @@ namespace DAE.GameSystem
 
         public Card CurrentCard;
 
+        private StateMachine<GameStateBase> _gameStateMachine;
+
         public void Start()
         {
             Hand.GetComponent<HandHelper>().LoadCardDeck();
@@ -32,6 +36,14 @@ namespace DAE.GameSystem
             ConnectPiece(grid, board);
 
             _moveManager = new ActionManager<Card, Piece>(board, grid);
+
+            _gameStateMachine = new StateMachine<GameStateBase>();
+            _gameStateMachine.Register(GameState.GamePlayState,
+                   new GamePlayState(_gameStateMachine, _moveManager));
+
+            _gameStateMachine.InitialState = GameState.GamePlayState;
+
+
 
 
             board.Moved += (s, e) =>
@@ -112,22 +124,23 @@ namespace DAE.GameSystem
         {
             view.Dropped += (s, e) =>
             {
-                var cards = FindObjectsOfType<Card>();
-                foreach (var card in cards)
-                {
-                    if (card.CardActive == true)
-                    {
-                        _moveManager.Action(_piece, e.Position, card);
+                _gameStateMachine.CurrentState.Dropped(e.Position, _piece);
+                //    var cards = FindObjectsOfType<Card>();
+                //    foreach (var card in cards)
+                //    {
+                //        if (card.CardActive == true)
+                //        {
+                //            _moveManager.Action(_piece, e.Position, card);
 
-                        var views = FindObjectsOfType<PositionView>();
-                        foreach (var view in views)
-                        {
-                            view.Model.Deactivate();
-                        }
-                        RemoveCard();
+                //            var views = FindObjectsOfType<PositionView>();
+                //            foreach (var view in views)
+                //            {
+                //                view.Model.Deactivate();
+                //            }
+                //            RemoveCard();
 
-                    }
-                }
+                //        }
+                //    }
             };
         }
 

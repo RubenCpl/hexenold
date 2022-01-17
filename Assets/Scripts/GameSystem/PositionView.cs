@@ -28,6 +28,7 @@ public class PositionView : MonoBehaviour, IDropHandler, IPointerEnterHandler
     [SerializeField]
     private UnityEvent OnDeactivate;
 
+
     public event EventHandler<PositionEventArgs> Dropped;
 
     public event EventHandler<PositionEventArgs> Hovered;
@@ -66,6 +67,11 @@ public class PositionView : MonoBehaviour, IDropHandler, IPointerEnterHandler
             return _model;
         }
     }
+
+    //public void Destory()
+    //{
+       
+    //}
 
     private void PositionDeactivated(object sender, EventArgs e)
         => OnDeactivate.Invoke();
