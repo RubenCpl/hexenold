@@ -38,6 +38,10 @@ namespace DAE.GameSystem
             _moveManager = new ActionManager<Card, Piece>(board, grid);
 
             _gameStateMachine = new StateMachine<GameStateBase>();
+            _gameStateMachine = new StateMachine<GameStateBase>();
+            _gameStateMachine = new StateMachine<GameStateBase>();
+
+
             _gameStateMachine.Register(GameState.GamePlayState,
                    new GamePlayState(_gameStateMachine, _moveManager));
 
