@@ -858,6 +858,7 @@ MonoBehaviour:
   LaserPrefab: {fileID: 5620252075382666640, guid: 348b09a3f5da65e48b5b006637008d12, type: 3}
   SlashPrefab: {fileID: 2532532555836767874, guid: bfcce235771b3c749998d3d2a6a0d658, type: 3}
   PushPrefab: {fileID: 509769820515949642, guid: 08160fd7ac077d949a6c3e80a459c390, type: 3}
+  BombPrefab: {fileID: 5941729025710641242, guid: 9ca26c4993efa2c418d2f5b60f43f61a, type: 3}
 --- !u!4 &425345702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6065370885833794217, guid: 0e537f8d648d3eb4db6ffb0aef916e78, type: 3}

@@ -64,7 +64,7 @@ namespace DAE.HexSystem
 
             _actions.Add(CardType.Push, new Push<TCard, TPiece>());
 
-            _actions.Add(CardType.Bomb, new Push<TCard, TPiece>());
+            _actions.Add(CardType.Bomb, new Bomb<TCard, TPiece>());
         }
 
     }
