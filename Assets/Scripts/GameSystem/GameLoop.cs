@@ -22,6 +22,8 @@ namespace DAE.GameSystem
 
         public Card CurrentCard;
 
+        public GameObject StartButton;
+
         private StateMachine<GameStateBase> _gameStateMachine;
 
         public void Start()
@@ -37,10 +39,13 @@ namespace DAE.GameSystem
 
             _gameStateMachine = new StateMachine<GameStateBase>();
             _gameStateMachine = new StateMachine<GameStateBase>();
-            //_gameStateMachine = new StateMachine<GameStateBase>();
+            _gameStateMachine = new StateMachine<GameStateBase>();
 
-            _gameStateMachine.Register(GameState.GamePlayState,
+            _gameStateMachine.Register(GameState.StartScreenState,
                    new StartScreenState (_gameStateMachine, _moveManager));
+
+            _gameStateMachine.Register(GameState.EndScreenState,
+                new StartScreenState(_gameStateMachine, _moveManager));
 
             _gameStateMachine.Register(GameState.GamePlayState,
                    new GamePlayState(_gameStateMachine, _moveManager, Hand));
@@ -81,6 +86,11 @@ namespace DAE.GameSystem
             {
                 RemoveCard();
                 e.Piece.Taken();
+
+                if (e.Piece.PieceType == PieceType.Player)
+                {
+                    _gameStateMachine.MoveToState("gamePlayState");
+                }
             };
         }
 
@@ -153,6 +163,11 @@ namespace DAE.GameSystem
         {
             view.Hovered += (s, e) =>
             {
+                if (StartButton.activeInHierarchy == false)
+                {
+                    _gameStateMachine.MoveToState("gamePlayState");
+                }
+
                 var cards = FindObjectsOfType<Card>();
 
 
@@ -216,9 +231,5 @@ namespace DAE.GameSystem
             }
         }
 
-        public void ChangeStateToGameplay()
-        {
-            _gameStateMachine.InitialState = GameState.GamePlayState;
-        }
     }
 }

@@ -26,9 +26,14 @@ namespace DAE.GameSystem.GameStates
 
             _hand.GetComponent<HandHelper>().LoadCardDeck();
 
-            //GenerateStartHand();
 
         }
+
+        public override void OnEnter()
+        {
+            GenerateStartHand();
+        }
+
 
         internal virtual void GenerateStartHand()
         {
