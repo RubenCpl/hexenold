@@ -44,8 +44,29 @@ namespace DAE.GameSystem.GameStates
         internal override void Dropped(Position position, Piece piece, Piece[] pieces, PositionView[] views, Card[] cards, GameObject hand)
         {
 
+
+
             foreach (var card in cards)
             {
+                if (card.CardActive == true && card.CardType == CardType.Bomb)
+                {
+                    var positions = _actionManager.IsolatedValidPositionFor(piece, position, card);
+
+                    foreach (var pos in positions)
+                    {
+                        foreach (var view in views)
+                        {
+                            if (view.Model == pos)
+                            {
+                                view.gameObject.SetActive(false);
+                            }
+
+                        }
+                    }
+
+                }
+
+
                 if (card.CardActive == true)
                 {
                     _actionManager.Action(piece, position, card);

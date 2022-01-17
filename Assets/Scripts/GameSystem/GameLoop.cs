@@ -143,22 +143,6 @@ namespace DAE.GameSystem
             {
                 var cards = FindObjectsOfType<Card>();
                 _gameStateMachine.CurrentState.Dropped(e.Position, _piece, pieces, views, cards, hand);
-                //    var cards = FindObjectsOfType<Card>();
-                //    foreach (var card in cards)
-                //    {
-                //        if (card.CardActive == true)
-                //        {
-                //            _moveManager.Action(_piece, e.Position, card);
-
-                //            var views = FindObjectsOfType<PositionView>();
-                //            foreach (var view in views)
-                //            {
-                //                view.Model.Deactivate();
-                //            }
-                //            RemoveCard();
-
-                //        }
-                //    }
             };
         }
 
@@ -175,44 +159,6 @@ namespace DAE.GameSystem
 
 
                 _gameStateMachine.CurrentState.Hovered(e.Position, _piece, pieces, views, cards, hand);
-
-                //bool isolate = false;
-                //var views = FindObjectsOfType<PositionView>();
-                //foreach (var view in views)
-                //{
-                //    view.Model.Deactivate();
-                //}
-
-                //var cards = FindObjectsOfType<Card>();
-                //foreach (var card in cards)
-                //{
-                //    if (card.CardActive == true)
-                //    {
-                //        var positions = _moveManager.ValidPositionFor(_piece, position, card);
-
-                //        foreach (var pos in positions)
-                //        {
-                //            if (position == pos)
-                //                isolate = true;
-                //        }
-
-                //        if (isolate != true)
-                //            foreach (var pos in positions)
-                //                if (pos != null)
-                //                    pos.Activate();
-
-                //        if (isolate == true)
-                //        {
-                //            var isolatedPos = _moveManager.IsolatedValidPositionFor(_piece, position, card);
-
-                //            foreach (var iPos in isolatedPos)
-                //            {
-                //                if (iPos != null)
-                //                    iPos.Activate();
-                //            }
-                //        }
-                //    }
-                //}
             };
         }
 
