@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using DAE.HexSystem;
+using DAE.StateSystem;
+using DAE.GameSystem;
 using UnityEngine;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class EndScreenState : MonoBehaviour
+namespace DAE.GameSystem.GameStates
 {
-    // Start is called before the first frame update
-    void Start()
+    class EndScreenState : GameStateBase
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public EndScreenState(StateMachine<GameStateBase> stateMachine, ActionManager<Card, Piece> actionManager) : base(stateMachine)
+        {
+
+
+        }
+        public override void OnEnter()
+        {
+
+        }
+
     }
 }
+

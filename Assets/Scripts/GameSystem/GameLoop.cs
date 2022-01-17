@@ -18,6 +18,8 @@ namespace DAE.GameSystem
         private ActionManager<Card, Piece> _moveManager;
         private Piece _piece;
 
+        public GameObject GameOver;
+
         public GameObject Hand;
 
         public Card CurrentCard;
@@ -28,7 +30,7 @@ namespace DAE.GameSystem
 
         public void Start()
         {
-
+            GameOver.SetActive(false);
             var grid = new Grid<Position>(30);
             ConnectGrid(grid);
 
@@ -89,7 +91,8 @@ namespace DAE.GameSystem
 
                 if (e.Piece.PieceType == PieceType.Player)
                 {
-                    _gameStateMachine.MoveToState("gamePlayState");
+                    _gameStateMachine.MoveToState("endState");
+                    GameOver.SetActive(true);
                 }
             };
         }
