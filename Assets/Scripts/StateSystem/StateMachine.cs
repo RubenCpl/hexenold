@@ -22,6 +22,7 @@ namespace DAE.StateSystem
                 else
                     return default (TState);
             }
+
         }
 
         public string InitialState

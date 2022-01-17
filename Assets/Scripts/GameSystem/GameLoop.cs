@@ -26,9 +26,7 @@ namespace DAE.GameSystem
 
         public void Start()
         {
-            Hand.GetComponent<HandHelper>().LoadCardDeck();
 
-            GenerateStartHand();
             var grid = new Grid<Position>(30);
             ConnectGrid(grid);
 
@@ -39,13 +37,15 @@ namespace DAE.GameSystem
 
             _gameStateMachine = new StateMachine<GameStateBase>();
             _gameStateMachine = new StateMachine<GameStateBase>();
-            _gameStateMachine = new StateMachine<GameStateBase>();
-
+            //_gameStateMachine = new StateMachine<GameStateBase>();
 
             _gameStateMachine.Register(GameState.GamePlayState,
-                   new GamePlayState(_gameStateMachine, _moveManager));
+                   new StartScreenState (_gameStateMachine, _moveManager));
 
-            _gameStateMachine.InitialState = GameState.GamePlayState;
+            _gameStateMachine.Register(GameState.GamePlayState,
+                   new GamePlayState(_gameStateMachine, _moveManager, Hand));
+
+            _gameStateMachine.InitialState = GameState.StartScreenState;
 
 
 
@@ -214,6 +214,11 @@ namespace DAE.GameSystem
                     board.Place(piece, position);
                 }
             }
+        }
+
+        public void ChangeStateToGameplay()
+        {
+            _gameStateMachine.InitialState = GameState.GamePlayState;
         }
     }
 }

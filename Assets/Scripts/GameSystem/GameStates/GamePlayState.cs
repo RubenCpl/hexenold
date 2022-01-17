@@ -14,13 +14,26 @@ namespace DAE.GameSystem.GameStates
     {
         private ActionManager<Card, Piece> _actionManager;
 
+        private GameObject _hand;
 
 
-        public GamePlayState( StateMachine<GameStateBase> stateMachine, ActionManager<Card, Piece> actionManager) : base(stateMachine)
+
+        public GamePlayState( StateMachine<GameStateBase> stateMachine, ActionManager<Card, Piece> actionManager, GameObject hand) : base(stateMachine)
         {
             _actionManager = actionManager;
 
+            _hand = hand;
 
+            _hand.GetComponent<HandHelper>().LoadCardDeck();
+
+            //GenerateStartHand();
+
+        }
+
+        internal virtual void GenerateStartHand()
+        {
+            for (int i = 0; i < _hand.GetComponent<HandHelper>().MaxHand; i++)
+                _hand.GetComponent<HandHelper>().GenerateCard();
         }
 
         internal override void Dropped(Position position, Piece piece, Piece[] pieces, PositionView[] views, Card[] cards, GameObject hand)
