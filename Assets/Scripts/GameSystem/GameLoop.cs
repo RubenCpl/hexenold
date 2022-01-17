@@ -112,19 +112,20 @@ namespace DAE.GameSystem
 
                 foreach (var piece in pieces)
                 {
-                    DropCard(view);
+                    var cards = FindObjectsOfType<Card>();
+                    DropCard(view, pieces, views, cards, Hand);
 
-                    HoverTiles(view, position);
+                    HoverTiles(view, pieces, views, cards, Hand);
                 }
                 view.gameObject.name = $"Tile ({x},{y})";
             }
         }
 
-        private void DropCard(PositionView view)
+        private void DropCard(PositionView view, Piece[] pieces, PositionView[] views, Card[] cards, GameObject hand)
         {
             view.Dropped += (s, e) =>
             {
-                _gameStateMachine.CurrentState.Dropped(e.Position, _piece);
+                _gameStateMachine.CurrentState.Dropped(e.Position, _piece, pieces, views, cards, hand);
                 //    var cards = FindObjectsOfType<Card>();
                 //    foreach (var card in cards)
                 //    {
@@ -144,47 +145,50 @@ namespace DAE.GameSystem
             };
         }
 
-        private void HoverTiles(PositionView view, Position position)
+        private void HoverTiles(PositionView view, Piece[] pieces, PositionView[] views, Card[] cards, GameObject hand)
         {
             view.Hovered += (s, e) =>
             {
-                bool isolate = false;
-                var views = FindObjectsOfType<PositionView>();
-                foreach (var view in views)
-                {
-                    view.Model.Deactivate();
-                }
 
-                var cards = FindObjectsOfType<Card>();
-                foreach (var card in cards)
-                {
-                    if (card.CardActive == true)
-                    {
-                        var positions = _moveManager.ValidPositionFor(_piece, position, card);
+                _gameStateMachine.CurrentState.Hovered(e.Position, _piece, pieces, views, cards, hand);
 
-                        foreach (var pos in positions)
-                        {
-                            if (position == pos)
-                                isolate = true;
-                        }
+                //bool isolate = false;
+                //var views = FindObjectsOfType<PositionView>();
+                //foreach (var view in views)
+                //{
+                //    view.Model.Deactivate();
+                //}
 
-                        if (isolate != true)
-                            foreach (var pos in positions)
-                                if (pos != null)
-                                    pos.Activate();
+                //var cards = FindObjectsOfType<Card>();
+                //foreach (var card in cards)
+                //{
+                //    if (card.CardActive == true)
+                //    {
+                //        var positions = _moveManager.ValidPositionFor(_piece, position, card);
 
-                        if (isolate == true)
-                        {
-                            var isolatedPos = _moveManager.IsolatedValidPositionFor(_piece, position, card);
+                //        foreach (var pos in positions)
+                //        {
+                //            if (position == pos)
+                //                isolate = true;
+                //        }
 
-                            foreach (var iPos in isolatedPos)
-                            {
-                                if (iPos != null)
-                                    iPos.Activate();
-                            }
-                        }
-                    }
-                }
+                //        if (isolate != true)
+                //            foreach (var pos in positions)
+                //                if (pos != null)
+                //                    pos.Activate();
+
+                //        if (isolate == true)
+                //        {
+                //            var isolatedPos = _moveManager.IsolatedValidPositionFor(_piece, position, card);
+
+                //            foreach (var iPos in isolatedPos)
+                //            {
+                //                if (iPos != null)
+                //                    iPos.Activate();
+                //            }
+                //        }
+                //    }
+                //}
             };
         }
 

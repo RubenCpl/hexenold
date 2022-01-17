@@ -23,29 +23,117 @@ namespace DAE.GameSystem.GameStates
 
         }
 
-        internal override void Dropped(Position position, Piece piece)
+        internal override void Dropped(Position position, Piece piece, Piece[] pieces, PositionView[] views, Card[] cards, GameObject hand)
         {
-            var cards = FindObjectsOfType<Card>();
+
             foreach (var card in cards)
             {
                 if (card.CardActive == true)
                 {
-                    _moveManager.Action(piece, position, card);
+                    _actionManager.Action(piece, position, card);
 
-                    var views = FindObjectsOfType<PositionView>();
                     foreach (var view in views)
                     {
                         view.Model.Deactivate();
                     }
-                    RemoveCard();
+                    RemoveCard(cards, hand);
                 }
             }
-        };
+        }
+
+
+        private void RemoveCard(Card[] cards, GameObject hand)
+        {
+            foreach (var card in cards)
+            {
+                card.CardDestory();
+            }
+
+            hand.GetComponent<HandHelper>().GenerateCard();
+        }
+
+
+        internal override void Hovered(Position position, Piece piece, Piece[] pieces, PositionView[] views, Card[] cards, GameObject hand)
+        {
+            bool isolate = false;
+            foreach (var view in views)
+            {
+                view.Model.Deactivate();
+            }
+
+            foreach (var card in cards)
+            {
+                if (card.CardActive == true)
+                {
+                    var positions = _actionManager.ValidPositionFor(piece, position, card);
+
+                    foreach (var pos in positions)
+                    {
+                        if (position == pos)
+                            isolate = true;
+                    }
+
+                    if (isolate != true)
+                        foreach (var pos in positions)
+                            if (pos != null)
+                                pos.Activate();
+
+                    if (isolate == true)
+                    {
+                        var isolatedPos = _actionManager.IsolatedValidPositionFor(piece, position, card);
+
+                        foreach (var iPos in isolatedPos)
+                        {
+                            if (iPos != null)
+                                iPos.Activate();
+                        }
+                    }
+                }
+            }
+        }
     }
 
-        //internal override void Hovered(Position position)
-        //{
-
-        //}
-    }
 }
+
+//internal override void Hovered(Position position, Piece piece, Piece[] pieces, PositionView[] views, Card[] cards, GameObject hand)
+//    {
+//        bool isolate = false;
+//        var views = FindObjectsOfType<PositionView>();
+//        foreach (var view in views)
+//        {
+//            view.Model.Deactivate();
+//        }
+
+//        var cards = FindObjectsOfType<Card>();
+//        foreach (var card in cards)
+//        {
+//            if (card.CardActive == true)
+//            {
+//                var positions = _moveManager.ValidPositionFor(_piece, position, card);
+
+//                foreach (var pos in positions)
+//                {
+//                    if (position == pos)
+//                        isolate = true;
+//                }
+
+//                if (isolate != true)
+//                    foreach (var pos in positions)
+//                        if (pos != null)
+//                            pos.Activate();
+
+//                if (isolate == true)
+//                {
+//                    var isolatedPos = _moveManager.IsolatedValidPositionFor(_piece, position, card);
+
+//                    foreach (var iPos in isolatedPos)
+//                    {
+//                        if (iPos != null)
+//                            iPos.Activate();
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+

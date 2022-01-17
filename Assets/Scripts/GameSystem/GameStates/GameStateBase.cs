@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace DAE.GameSystem.GameStates
 {
@@ -26,12 +27,12 @@ namespace DAE.GameSystem.GameStates
         {    
         }
 
-        internal virtual void Dropped(Position position, Piece piece)
+        internal virtual void Dropped(Position position, Piece piece, Piece[] pieces, PositionView[] views, Card[] cards, GameObject hand)
         {
             
         }
 
-        internal virtual void Hovered (Position position, Piece piece)
+        internal virtual void Hovered (Position position, Piece piece, Piece[] pieces, PositionView[] views, Card[] cards, GameObject hand)
         {
             
         }
