@@ -15,13 +15,9 @@ namespace DAE.GameSystem.GameStates
 
         private GameObject _gameOver;
 
-        public EndScreenState(StateMachine<GameStateBase> stateMachine, ActionManager<Card, Piece> actionManager, GameObject gameOver) : base(stateMachine)
+        public EndScreenState(StateMachine<GameStateBase> stateMachine, ActionManager<Card, Piece> actionManager) : base(stateMachine)
         {
-            _gameOver = gameOver;
-        }
-        public override void OnEnter()
-        {
-            _gameOver.SetActive(true);
+
         }
 
     }

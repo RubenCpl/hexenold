@@ -18,17 +18,11 @@ namespace DAE.GameSystem.GameStates
 
 
 
-        public StartScreenState(StateMachine<GameStateBase> stateMachine, ActionManager<Card, Piece> actionManager, GameObject gameOver) : base(stateMachine)
+        public StartScreenState(StateMachine<GameStateBase> stateMachine, ActionManager<Card, Piece> actionManager) : base(stateMachine)
         {
             _actionManager = actionManager;
-            _gameOver = gameOver;
 
 
-        }
-
-        public override void OnEnter()
-        {
-            _gameOver.SetActive(false);
         }
 
         //internal override void Dropped(Position position, Piece piece, Piece[] pieces, PositionView[] views, Card[] cards, GameObject hand)

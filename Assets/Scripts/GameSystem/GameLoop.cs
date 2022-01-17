@@ -36,6 +36,9 @@ namespace DAE.GameSystem
             var board = new Board<Position, Piece>();
             ConnectPiece(grid, board);
 
+            GameOver.SetActive(false);
+
+
             _moveManager = new ActionManager<Card, Piece>(board, grid);
 
             _gameStateMachine = new StateMachine<GameStateBase>();
@@ -43,10 +46,10 @@ namespace DAE.GameSystem
             _gameStateMachine = new StateMachine<GameStateBase>();
 
             _gameStateMachine.Register(GameState.StartScreenState,
-                   new StartScreenState (_gameStateMachine, _moveManager, GameOver));
+                   new StartScreenState (_gameStateMachine, _moveManager));
 
             _gameStateMachine.Register(GameState.EndScreenState,
-                new StartScreenState(_gameStateMachine, _moveManager, GameOver));
+                new StartScreenState(_gameStateMachine, _moveManager));
 
             _gameStateMachine.Register(GameState.GamePlayState,
                    new GamePlayState(_gameStateMachine, _moveManager, Hand));
@@ -86,12 +89,14 @@ namespace DAE.GameSystem
             board.Taken += (s, e) =>
             {
                 RemoveCard();
-                e.Piece.Taken();
 
                 if (e.Piece.PieceType == PieceType.Player)
                 {
+                    GameOver.SetActive(true);
                     _gameStateMachine.MoveToState("endState");
                 }
+                e.Piece.Taken();
+               
             };
         }
 

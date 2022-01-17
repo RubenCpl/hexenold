@@ -1,4 +1,7 @@
 ﻿using DAE.HexSystem;
+using DAE.BoardSystem;
+using DAE.StateSystem;
+using DAE.GameSystem.GameStates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
