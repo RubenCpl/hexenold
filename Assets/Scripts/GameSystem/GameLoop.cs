@@ -112,19 +112,19 @@ namespace DAE.GameSystem
 
                 foreach (var piece in pieces)
                 {
-                    var cards = FindObjectsOfType<Card>();
-                    DropCard(view, pieces, views, cards, Hand);
+                    DropCard(view, pieces, views, Hand);
 
-                    HoverTiles(view, pieces, views, cards, Hand);
+                    HoverTiles(view, pieces, views, Hand);
                 }
                 view.gameObject.name = $"Tile ({x},{y})";
             }
         }
 
-        private void DropCard(PositionView view, Piece[] pieces, PositionView[] views, Card[] cards, GameObject hand)
+        private void DropCard(PositionView view, Piece[] pieces, PositionView[] views, GameObject hand)
         {
             view.Dropped += (s, e) =>
             {
+                var cards = FindObjectsOfType<Card>();
                 _gameStateMachine.CurrentState.Dropped(e.Position, _piece, pieces, views, cards, hand);
                 //    var cards = FindObjectsOfType<Card>();
                 //    foreach (var card in cards)
@@ -145,10 +145,12 @@ namespace DAE.GameSystem
             };
         }
 
-        private void HoverTiles(PositionView view, Piece[] pieces, PositionView[] views, Card[] cards, GameObject hand)
+        private void HoverTiles(PositionView view, Piece[] pieces, PositionView[] views, GameObject hand)
         {
             view.Hovered += (s, e) =>
             {
+                var cards = FindObjectsOfType<Card>();
+
 
                 _gameStateMachine.CurrentState.Hovered(e.Position, _piece, pieces, views, cards, hand);
 
