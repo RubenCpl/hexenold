@@ -30,7 +30,6 @@ namespace DAE.GameSystem
 
         public void Start()
         {
-            GameOver.SetActive(false);
             var grid = new Grid<Position>(30);
             ConnectGrid(grid);
 
@@ -44,10 +43,10 @@ namespace DAE.GameSystem
             _gameStateMachine = new StateMachine<GameStateBase>();
 
             _gameStateMachine.Register(GameState.StartScreenState,
-                   new StartScreenState (_gameStateMachine, _moveManager));
+                   new StartScreenState (_gameStateMachine, _moveManager, GameOver));
 
             _gameStateMachine.Register(GameState.EndScreenState,
-                new StartScreenState(_gameStateMachine, _moveManager));
+                new StartScreenState(_gameStateMachine, _moveManager, GameOver));
 
             _gameStateMachine.Register(GameState.GamePlayState,
                    new GamePlayState(_gameStateMachine, _moveManager, Hand));
@@ -92,7 +91,6 @@ namespace DAE.GameSystem
                 if (e.Piece.PieceType == PieceType.Player)
                 {
                     _gameStateMachine.MoveToState("endState");
-                    GameOver.SetActive(true);
                 }
             };
         }
